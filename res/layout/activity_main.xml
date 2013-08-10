@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+    
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:textSize="40sp" />
+
+    <Button
+        android:id="@+id/signButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signButton"
+        android:textColor="#000000"
+        android:minWidth="180sp"
+        android:onClick="signAction" />
+    <Button
+        android:id="@+id/createTweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tweet"
+        android:textColor="#000000"
+        android:minWidth="180sp"
+        android:onClick="tweetAction" />
+    <Button
+        android:id="@+id/viewFeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/viewFeed"
+        android:textColor="#000000"
+        android:minWidth="180sp"
+        android:onClick="feedAction" />
+
+</LinearLayout>

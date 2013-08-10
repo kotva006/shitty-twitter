@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Shitty Twitter</string>
+    <string name="signButton"></string>
+    <string name="tweet">Tweet</string>
+    <string name="viewFeed">View Feed</string>
+    <string name="menu_settings">Settings</string>
+    
+    <string name="signIn">Sign In</string>
+    <string name="userName">Username</string>
+    <string name="password">Password</string>
+
+</resources>

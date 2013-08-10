@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <TextView
+        android:id="@+id/signIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signIn"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:textSize="40sp" />
+    
+    <EditText android:id="@+id/userName"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+	      android:hint="@string/userName"
+	      android:inputType="text|textCapSentences"
+	      android:maxLength="60" />
+    
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:maxLength="60" />
+
+    <Button
+        android:id="@+id/signInAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signIn"
+        android:textColor="#000000"
+        android:minWidth="180sp"
+        android:onClick="signInAction" />
+    
+</LinearLayout>
