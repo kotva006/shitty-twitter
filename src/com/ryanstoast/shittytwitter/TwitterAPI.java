@@ -11,16 +11,8 @@ import android.util.Base64;
 import android.util.Log;
 
 public class TwitterAPI {
-
-public static String signIn(String username, String password) {
-		
-		
-		return "";
-	}
 	
-	public static String getSignature(String url, HashMap<String, String> map) {
-		
-		// TODO Make percent encoder
+	public static String getSignatureBase(String url, HashMap<String, String> map) {
 		
 		String result = "POST";
 		String holder = "";
@@ -50,11 +42,10 @@ public static String signIn(String username, String password) {
 	}
 	
 	public static String getKey() {
-		
-		return"";
+		return  Settings.CONSUMER_SECRET + "&" + MainActivity.getTwitterToken();
 	}
 	
-	public static String getHMAC(String data, String key) {
+	public static String getSignature(String data, String key) {
 		String result = "";
 		
 		try {
@@ -75,5 +66,4 @@ public static String signIn(String username, String password) {
 		Log.d("HMAC Hash: ", result);
 		return result;
 	}
-	 
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -24,7 +25,7 @@ public class SignIn extends Activity{
 	 
 	 private class signInCaller extends AsyncTask<String, Void, String> {
 		 
-		 ProgressDialog dialog;
+		 
 		 
 		 protected void onPreExecute() {
 			 //dialog = ProgressDialog.show(getApplicationContext(), "Signing In...", "");
@@ -36,6 +37,9 @@ public class SignIn extends Activity{
 		 }
 		 
 		 protected void onPostExecute(String result) {
+			 
+			 Log.d("signInCaller Result", result);
+			 MainActivity.requestToken = result;
 			 
 		 }
 	 }

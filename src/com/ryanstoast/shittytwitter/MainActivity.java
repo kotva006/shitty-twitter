@@ -10,7 +10,11 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 	
-	String requestToken = "";
+	static String requestToken = "";
+	
+	public static String getTwitterToken() {
+		return requestToken;
+	}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
