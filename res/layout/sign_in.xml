@@ -13,21 +13,22 @@
         android:gravity="center"
         android:textSize="40sp" />
     
-    <EditText android:id="@+id/userName"
+    <TextView 
+        android:id="@+id/pin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pin"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:textSize="20sp" />
+    
+    <EditText android:id="@+id/pin_box"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
 	      android:hint="@string/userName"
 	      android:inputType="text|textCapSentences"
 	      android:maxLength="60" />
     
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:maxLength="60" />
-
     <Button
         android:id="@+id/signInAction"
         android:layout_width="wrap_content"

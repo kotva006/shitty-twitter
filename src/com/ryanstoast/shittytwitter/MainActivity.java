@@ -10,7 +10,7 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 	
-	String twitterToken = "";
+	String requestToken = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,11 +18,12 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         Button signButton = (Button) findViewById(R.id.signButton);
-        Button tweetButton = (Button) findViewById(R.id.signButton);
-        Button feedButton = (Button) findViewById(R.id.signButton);
+        Button tweetButton = (Button) findViewById(R.id.createTweet);
+        Button feedButton = (Button) findViewById(R.id.viewFeed);
         
-        if (twitterToken.equals("")) {
+        if (requestToken.equals("")) {
         	signButton.setText("Sign In");
+        	signButton.setClickable(true);
         	tweetButton.setClickable(false);
         	feedButton.setClickable(false);        	
         } else {
@@ -42,15 +43,16 @@ public class MainActivity extends Activity {
     public void signAction(View v) {
     	
     	Button signButton = (Button) findViewById(R.id.signButton);
-        Button tweetButton = (Button) findViewById(R.id.signButton);
-        Button feedButton = (Button) findViewById(R.id.signButton);
+        Button tweetButton = (Button) findViewById(R.id.createTweet);
+        Button feedButton = (Button) findViewById(R.id.viewFeed);
     	
-    	if (twitterToken.equals("") && signButton.getText().toString().equals("Sign In")) {
+    	if (requestToken.equals("") && signButton.getText().toString().equals("Sign In")) {
     	    String url = "https://api.twitter.com";
+    	    //Settings.random();
     	    Intent signIn = new Intent(MainActivity.this, SignIn.class);
     	    startActivityForResult(signIn,SignIn.SIGN_IN_REQUEST_CODE);
     	} else {
-    		twitterToken = "";
+    		requestToken = "";
     		signButton.setText("Sign In");
         	tweetButton.setClickable(false);
         	feedButton.setClickable(false);

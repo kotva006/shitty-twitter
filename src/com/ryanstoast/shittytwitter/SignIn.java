@@ -13,12 +13,13 @@ public class SignIn extends Activity{
 	
 	 protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
-	        setContentView(R.layout.activity_main);
+	        setContentView(R.layout.sign_in);
 	 }
 	 
 	 public void signInAction(View v) {
-		 EditText username = (EditText) findViewById(R.id.userName);
-		 EditText password = (EditText) findViewById(R.id.password);
+		 EditText pin = (EditText) findViewById(R.id.pin_box);
+		 signInCaller caller = new signInCaller();
+		 caller.execute("Stuff");
 	 }
 	 
 	 private class signInCaller extends AsyncTask<String, Void, String> {
@@ -26,12 +27,12 @@ public class SignIn extends Activity{
 		 ProgressDialog dialog;
 		 
 		 protected void onPreExecute() {
-			 dialog = ProgressDialog.show(getApplicationContext(), "Signing In...", "");
+			 //dialog = ProgressDialog.show(getApplicationContext(), "Signing In...", "");
 		 }
 		 
 		 protected String doInBackground(String... string) {
 			 
-			 return Network.signIn(string[0],string[1]);
+			 return Network.getToken();
 		 }
 		 
 		 protected void onPostExecute(String result) {
