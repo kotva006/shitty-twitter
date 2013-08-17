@@ -24,6 +24,8 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 
+import android.util.Log;
+
 /**
  * REST client library for Java.
  * @author Luke Lowrey
@@ -121,12 +123,14 @@ public class NetworkClient {
                 HttpPost request = new HttpPost(url);
 
                 // Add headers to request
-                for (NameValuePair h : headers)
+                for (NameValuePair h : headers) {
                     request.addHeader(h.getName(), h.getValue());
+                    Log.d("Headers: ", h.getName() + " " + h.getValue());
+                }
 
                 if (!params.isEmpty())
                     request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
-
+                
                 executeRequest(request, url);
                 break;
             }

@@ -9,32 +9,34 @@ import android.util.Log;
 
 public class Network {
 
-	static String url = "https://api.twitter.com";
+	static String url = TwitterAPI.BASE_URL;
 	
-	public static String getToken() {
-		String tokenUrl = url + "/oauth/request_token";
-		Log.d("Here", "I issg");
+	public static String[] getToken() {
 		
+		String tokenUrl = url + "/oauth/request_token";
+				
 		HashMap<String,String> map = new HashMap<String, String>();
 		
-		map.put("oauth_callback"          , "oop");
-		map.put("oauth_consumer_key"      , Settings.CONSUMER_KEY);
+		map.put("oauth_callback"          , TwitterAPI.CALLBACK);
+		map.put("oauth_consumer_key"      , TwitterAPI.CONSUMER_KEY);
 		map.put("oauth_nonce"             , TwitterAPI.getNONCE());
-		map.put("oauth_signature_method"  , "HMAC-SHA1");
-		map.put("oauth_timestamp"         , Integer.toString((int) 
-				                            (System.currentTimeMillis() / 1000L)));
-		map.put("oauth_version"           , "1.0");
+		map.put("oauth_signature_method"  , TwitterAPI.SIGNATURE_METHOD);
+		map.put("oauth_timestamp"         , TwitterAPI.getTime());
+		map.put("oauth_version"           , TwitterAPI.OAUTH_VER);
 		
-		String baseSig   = TwitterAPI.getSignatureBase(tokenUrl, map);
-		String signature = TwitterAPI.getSignature(baseSig, TwitterAPI.getKey());
+		String signature = TwitterAPI.getSignature(tokenUrl, map, TwitterAPI.getKey());
 		
 		map.put("oauth_signature"         , signature);
 		
 		String headerString = "OAuth ";
 		
 		NetworkClient client = new NetworkClient(tokenUrl);
-		client.AddHeader("Authorization", headerString + mapToString(map));
-		
+		client.AddHeader("POST", "/oauth/request_token HTTP/1.1");
+		client.AddHeader("User-Agent", "HTTP Client");
+		client.AddHeader("Host", "api.twitter.com");
+		client.AddHeader("Accept", "*/*");
+		client.AddHeader("Authorization", headerString + mapToHeaderString(map));
+			
 		client.SetTimeout(10000, 10000);
 		
 		try {
@@ -43,21 +45,32 @@ public class Network {
 			e.printStackTrace();
 		}
 		
-		Log.d("Network.getToken: ", (client.getResponse() == null) ? "" : client.getResponse());
+		if (client.getResponseCode() != 200) {
+	        
+			Log.d("Response Code", Integer.toString(client.getResponseCode()));
+			Log.d("Error Mesg:", client.getErrorMessage());
+			Log.d("Network.getToken: ", (client.getResponse() == null) ? "" : client.getResponse());
+		    
 		
-		return "";
+		} else if(client.getResponseCode() == 200) {
+			Log.d("Network.getToken: ", (client.getResponse() == null) ? "" : client.getResponse());
+			String[] t = client.getResponse().split("&");
+			String[]  tokens = {t[0].split("=")[1], t[1].split("=")[1], t[2].split("=")[1]};
+			return tokens;
+		}
+		return new String[]{""};
+		
 	}
 	
-	
-	private static String mapToString(HashMap<String,String> map) {
+	private static String mapToHeaderString(HashMap<String,String> map) {
 		
 		String result = "";
         TreeMap<String, String> sortedMap = new TreeMap<String, String>(map);
 		
 		for(String key : sortedMap.keySet()) {
-			result += OAuth.percentEncode(key) + "=" + OAuth.percentEncode(sortedMap.get(key));
+			result += OAuth.percentEncode(key) + "=\"" + OAuth.percentEncode(sortedMap.get(key)) + "\", ";
 		}
-		return result;
+		return result.substring(0, result.length() - 2);
 	}
 	
 	

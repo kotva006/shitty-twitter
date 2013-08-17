@@ -10,10 +10,12 @@ import android.widget.Button;
 
 public class MainActivity extends Activity {
 	
-	static String requestToken = "";
+	static String token = "";
+	static String token_secret = "";
+	
 	
 	public static String getTwitterToken() {
-		return requestToken;
+		return token;
 	}
 
     @Override
@@ -25,7 +27,7 @@ public class MainActivity extends Activity {
         Button tweetButton = (Button) findViewById(R.id.createTweet);
         Button feedButton = (Button) findViewById(R.id.viewFeed);
         
-        if (requestToken.equals("")) {
+        if (token.equals("")) {
         	signButton.setText("Sign In");
         	signButton.setClickable(true);
         	tweetButton.setClickable(false);
@@ -50,13 +52,14 @@ public class MainActivity extends Activity {
         Button tweetButton = (Button) findViewById(R.id.createTweet);
         Button feedButton = (Button) findViewById(R.id.viewFeed);
     	
-    	if (requestToken.equals("") && signButton.getText().toString().equals("Sign In")) {
-    	    String url = "https://api.twitter.com";
+    	if (token.equals("") && signButton.getText().toString().equals("Sign In")) {
+    	    //String url = "https://api.twitter.com";
     	    //Settings.random();
     	    Intent signIn = new Intent(MainActivity.this, SignIn.class);
     	    startActivityForResult(signIn,SignIn.SIGN_IN_REQUEST_CODE);
     	} else {
-    		requestToken = "";
+    		token = "";
+    		token_secret = "";
     		signButton.setText("Sign In");
         	tweetButton.setClickable(false);
         	feedButton.setClickable(false);
