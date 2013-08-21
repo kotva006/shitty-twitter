@@ -1,0 +1,40 @@
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <TextView
+        android:id="@+id/tweet"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"        
+        android:text="@string/tweet"
+        android:textSize="40sp" />
+    
+    <EditText 
+          android:id="@+id/tweetBody"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="20dp"
+          android:layout_marginLeft="20dp"
+	      android:inputType="textMultiLine|textCapSentences"
+	      android:gravity="top|left"
+	      android:singleLine="false"
+	      android:hint="@string/tweet_here"
+	      android:maxLength="140"/>
+
+    <Button
+        android:id="@+id/tweet_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:text="@string/post"
+        android:onClick="post" />
+    
+</LinearLayout>

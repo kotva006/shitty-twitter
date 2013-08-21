@@ -33,6 +33,14 @@
                 <data android:scheme="x-shitty-twitter-oauth-twitter" android:host="callback"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.ryanstoast.shittytwitter.Tweet"
+            android:label="@string/tweet" >            
+        </activity>
+        <activity
+            android:name="com.ryanstoast.shittytwitter.Feed"
+            android:label="@string/feed" >
+        </activity>
     </application>
 
 </manifest>

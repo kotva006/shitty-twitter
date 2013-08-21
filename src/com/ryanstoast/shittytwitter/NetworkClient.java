@@ -17,6 +17,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
@@ -72,6 +73,23 @@ public class NetworkClient {
         headers.add(new BasicNameValuePair(name, value));
     }
     
+    private String body = "";
+    public void AddBody(String b) {
+    	body += b;
+    }
+    
+    public void SetBody(String b) {
+    	body = b;
+    }
+    
+    public void ClearBody() {
+    	body = "";
+    }
+    
+    public int GetBodyLength() {
+    	return body.length();
+    }
+    
     /**
      * The time in milliseconds we will wait to establish a connection.
      */
@@ -110,7 +128,7 @@ public class NetworkClient {
                 }
 
                 HttpGet request = new HttpGet(url + combinedParams);
-
+                
                 // Add headers to request
                 for(NameValuePair h : headers)
                     request.addHeader(h.getName(), h.getValue());
@@ -121,13 +139,18 @@ public class NetworkClient {
             case POST:
             {
                 HttpPost request = new HttpPost(url);
-
+                                
                 // Add headers to request
                 for (NameValuePair h : headers) {
                     request.addHeader(h.getName(), h.getValue());
                     Log.d("Headers: ", h.getName() + " " + h.getValue());
                 }
 
+                if (body == "") {
+                	StringEntity entity = new StringEntity(body);
+                    request.setEntity(entity);
+                }
+                
                 if (!params.isEmpty())
                     request.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
                 

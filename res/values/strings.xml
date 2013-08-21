@@ -2,14 +2,17 @@
 <resources>
 
     <string name="app_name">Shitty Twitter</string>
+    <string name="hello">Hello: </string>
     <string name="signButton"></string>
     <string name="tweet">Tweet</string>
+    <string name="feed">Feed</string>
+    
+    <string name="tweet_here">Type Your Tweet Here&#8230;</string>
+    <string name="post">Post Tweet</string>
+    
     <string name="viewFeed">View Feed</string>
     <string name="menu_settings">Settings</string>
     
     <string name="signIn">Sign In</string>
-    <string name="pin">Enter the pin below:</string>
-    <string name="userName">Username</string>
-    <string name="password">Password</string>
 
 </resources>

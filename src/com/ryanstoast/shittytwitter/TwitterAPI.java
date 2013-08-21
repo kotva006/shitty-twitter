@@ -14,12 +14,17 @@ import android.util.Log;
 public class TwitterAPI {
 	
 	final static String BASE_URL      = "https://api.twitter.com";
+	
 	final static String REQUEST_TOKEN = "/oauth/request_token";
 	final static String AUTHENTICATE  = "/oauth/authenticate";
+	final static String ACCESS_TOKEN  = "/oauth/access_token";
 	
-	final static String CALLBACK      = "x-shitty-twitter-oauth-twitter://callback";
-	final static String CONSUMER_KEY  = Settings.CONSUMER_KEY;
-	final static String OAUTH_VER     = "1.0";
+	final static String POST_TWEET    = "/1.1/statuses/update.json";
+	final static String GET_TIMELINE  = "/1.1/statuses/home_timeline.json";
+	
+	final static String CALLBACK            = "x-shitty-twitter-oauth-twitter://callback";
+	final static String CONSUMER_KEY        = Settings.CONSUMER_KEY;
+	final static String OAUTH_VER           = "1.0";
 	final static String SIGNATURE_METHOD    = "HMAC-SHA1";
 	
 	public static String getTime() {
@@ -28,9 +33,9 @@ public class TwitterAPI {
 		
 	}
 		
-	private static String getSignatureBase(String url, HashMap<String, String> map) {
+	private static String getSignatureBase(String url, HashMap<String, String> map, String pog) {
 		
-		String result = "POST&" + OAuth.percentEncode(url) + "&";
+		String result = pog + "&" + OAuth.percentEncode(url) + "&";
 		String holder = "";
 		
 		TreeMap<String, String> sortedMap = new TreeMap<String, String>(map);
@@ -61,13 +66,13 @@ public class TwitterAPI {
 	
 	public static String getKey() {
 		
-		return  Settings.CONSUMER_SECRET + "&" + MainActivity.getTwitterToken();
+		return  Settings.CONSUMER_SECRET + "&" + MainActivity.getTwitterTokenSecret();
 		
 	}
 	
-	public static String getSignature(String url, HashMap<String, String> map, String key) {
+	public static String getSignature(String url, HashMap<String, String> map, String key, String pog) {
 		
-		String data   = getSignatureBase(url, map);
+		String data   = getSignatureBase(url, map, pog);
 		
 		String result = "";
 		
