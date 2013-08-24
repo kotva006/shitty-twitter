@@ -2,16 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#9AE4E8">
     
     <TextView
         android:id="@+id/signIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="100sp"
         android:layout_marginBottom="20dp"
         android:text="@string/signIn"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="40sp" />
@@ -21,9 +22,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="@drawable/brown_button"
         android:text="@string/signIn"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:minWidth="180sp"
         android:onClick="signInAction" />
+
+    <ProgressBar
+        android:id="@+id/signInProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:max="100"
+        android:maxWidth="100dp"
+        android:minWidth="100dip"
+        android:progress="0"
+        android:visibility="invisible" />
     
 </LinearLayout>

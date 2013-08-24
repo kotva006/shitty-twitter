@@ -1,7 +1,5 @@
 package com.ryanstoast.shittytwitter;
 
-import java.util.HashMap;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,30 +7,47 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
+import android.widget.ProgressBar;
 
 public class SignIn extends Activity{
 
 	final static int SIGN_IN_REQUEST_CODE = 425093;
+    final static int SIGN_IN_FAILED       = 352;
+    final static int SIGN_IN_OK           = 0;
 	
-	static String STEP_ONE_TOKEN          = "";
-	static String STEP_ONE_TOKEN_SECRET   = "";
+	protected static String STEP_ONE_TOKEN          = "";
+	protected static String STEP_ONE_TOKEN_SECRET   = "";
 	
-	static String STEP_TWO_TOKEN          = "";
-	static String STEP_TWO_TOKEN_VERIFIER = "";
-	
-	static String STEP_THREE_TOKEN        = "";
-	static String STEP_THREE_TOKEN_SECRET = "";
-	
-	static String USER_ID                 = "";
+	protected static String STEP_TWO_TOKEN          = "";
+	protected static String STEP_TWO_TOKEN_VERIFIER = "";
+		
+	protected void clearStrings() {
+		STEP_ONE_TOKEN          = "";
+		STEP_ONE_TOKEN_SECRET   = "";
+		STEP_TWO_TOKEN          = "";
+		STEP_TWO_TOKEN_VERIFIER = "";
+	}
 	
 	 protected void onCreate(Bundle savedInstanceState) {
-	        super.onCreate(savedInstanceState);
-	        setContentView(R.layout.sign_in);
+		 
+	   super.onCreate(savedInstanceState);
+	   setContentView(R.layout.sign_in);
+		 
+	   Button signIn = (Button) findViewById(R.id.signInAction);
+	   if (STEP_ONE_TOKEN == "") {
+		    	signIn.setEnabled(true);
+	    }
+	    
 	 }
 	 
 	 public void signInAction(View v) {
-		 //EditText pin = (EditText) findViewById(R.id.pin_box);
+		 
+		 Button signIn = (Button) findViewById(R.id.signInAction);
+		 signIn.setEnabled(false);
+		 ProgressBar bar = (ProgressBar) findViewById(R.id.signInProgressBar);
+		 bar.setVisibility(View.VISIBLE);
+		 bar.setProgress(0);
 		 GetRequestToken caller = new GetRequestToken();
 		 caller.execute();
 
@@ -53,24 +68,30 @@ public class SignIn extends Activity{
 		 STEP_TWO_TOKEN = tokens[0];
 		 STEP_TWO_TOKEN_VERIFIER = tokens[1];
 		 
+		 ProgressBar bar = (ProgressBar) findViewById(R.id.signInProgressBar);
+		 bar.setProgress(66);
+		 
 		 GetAccessToken get = new GetAccessToken();
 		 get.execute(tokens);
 	 }
 	 
 	 protected void onPause() {
 		 super.onPause();
-		 HashMap<String, String> map = new HashMap<String, String>();
+	 }
+	 
+	 private void finishActivity(String[] result) {
 		 
-		 map.put("STEP_ONE_TOKEN"         , STEP_ONE_TOKEN);
-	     map.put("STEP_ONE_TOKEN_SECRET"  , STEP_ONE_TOKEN_SECRET);
-	     map.put("STEP_TWO_TOKEN"         , STEP_TWO_TOKEN);
-	     map.put("STEP_TWO_TOKEN_VERIFIER", STEP_TWO_TOKEN_VERIFIER);
-	     map.put("STEP_THREE_TOKEN"       , STEP_THREE_TOKEN);
-	     map.put("STEP_THREE_TOKEN_SECRET", STEP_THREE_TOKEN_SECRET);
-	     map.put("USER_ID"                , USER_ID);
-	     
-	     MainActivity.setTokenMap(map);
-	     
+		 ProgressBar bar = (ProgressBar) findViewById(R.id.signInProgressBar);
+		 bar.setVisibility(View.INVISIBLE);
+		 bar.setProgress(0);
+		 
+		 Intent finishIntent = this.getIntent();
+		 finishIntent.putExtra("TOKEN", result[0]);
+		 finishIntent.putExtra("TOKEN_SECRET", result[1]);
+		 finishIntent.putExtra("USER_ID", result[3]);
+		 setResult(SignIn.SIGN_IN_OK, finishIntent);
+		 finish();
+		 
 	 }
 	 
 	 public void onBackPressed() {
@@ -92,10 +113,14 @@ public class SignIn extends Activity{
 		 
 		 protected void onPostExecute(String[] result) {
 			 
+			 ProgressBar bar = (ProgressBar) findViewById(R.id.signInProgressBar);
+			 bar.setProgress(33);
 			 
 			 if (result[0] == "") {
 				 Log.d("signInCaller:", "Recieved Failed login");
-				 return;
+				 setResult(SignIn.SIGN_IN_FAILED);
+				 clearStrings();
+				 finish();
 			 }
 			 Log.d("signInCaller Result", result[0]);
 			 STEP_ONE_TOKEN = result[0];
@@ -105,7 +130,7 @@ public class SignIn extends Activity{
 		              Uri.parse(TwitterAPI.BASE_URL + TwitterAPI.AUTHENTICATE +
 		            		  "?oauth_token=" + STEP_ONE_TOKEN));
 			 
-             SignIn.this.startActivityForResult(browser, SIGN_IN_REQUEST_CODE);
+             startActivityForResult(browser, SIGN_IN_REQUEST_CODE);
 		 }
 	 }
 	 
@@ -123,15 +148,19 @@ public class SignIn extends Activity{
 		 
 		 protected void onPostExecute(String[] result) {
 			 
-			 if (result[0] != "") {
+			 ProgressBar bar = (ProgressBar) findViewById(R.id.signInProgressBar);
+			 bar.setProgress(100);
+			 
+			 if (result[0] == "") {
 				 
-				 STEP_THREE_TOKEN        = result[0];
-				 STEP_THREE_TOKEN_SECRET = result[1];
-				 USER_ID                 = result[3];
+				 clearStrings();
+				 setResult(SIGN_IN_FAILED);
+				 finish();
 				 
 			 }
-			 SignIn.this.onPause();
-			 SignIn.this.finish();
+			 
+			 finishActivity(result);
+		
 		 }
 	 }
 	 

@@ -1,51 +1,30 @@
 package com.ryanstoast.shittytwitter;
 
-import java.util.HashMap;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.text.Editable;
 import android.view.Menu;
 import android.view.View;
 
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
-	static String token = "";
+	static String token        = "";
 	static String token_secret = "";
-	
-	private static HashMap<String, String> tokenMap = new HashMap<String, String>();
-	public static void setTokenMap(HashMap<String, String> map) {
-		tokenMap = map;
-	}
-	
-	
+	static String user_id      = "";
 	static public String getTwitterTokenSecret() {
-		String result = tokenMap.get("STEP_THREE_TOKEN_SECRET");
-		if (result == null) {
-			return "";
-		}
-		return result;
+	    return token_secret;
 	}
 	
 	static public String getTwitterToken() {
-		String result = tokenMap.get("STEP_THREE_TOKEN");
-		if (result == null) {
-			return "";
-		}
-		return result;
+		return token;
 	}
 	
 	static public String getUserName() {
-		String result = tokenMap.get("USER_ID");
-		if (result == null) {
-			return "";
-		}
-		return result;
+		return user_id;
 	}
 
     @Override
@@ -83,7 +62,6 @@ public class MainActivity extends Activity {
         Button feedButton = (Button) findViewById(R.id.viewFeed);
     	
     	if (signButton.getText().equals("Sign Out")) {
-    		tokenMap.clear();
     		signButton.setText("Sign In");
         	signButton.setEnabled(true);
         	tweetButton.setEnabled(false);
@@ -114,18 +92,29 @@ public class MainActivity extends Activity {
         switch(requestCode) {
             case SignIn.SIGN_IN_REQUEST_CODE:
             	
-            	TextView hello     = (TextView) findViewById(R.id.hello);
-            	Button signButton  = (Button) findViewById(R.id.signButton);
-                Button tweetButton = (Button) findViewById(R.id.createTweet);
-                Button feedButton  = (Button) findViewById(R.id.viewFeed);
+            	if (resultCode == SignIn.SIGN_IN_OK) {
+            	
+            		Bundle bundle = data.getExtras();
+            		token = bundle.getString("TOKEN");
+            		token_secret = bundle.getString("TOKEN_SECRET");
+            		user_id      = bundle.getString("USER_ID");
+            		
+            	    TextView hello     = (TextView) findViewById(R.id.hello);
+            	    Button signButton  = (Button) findViewById(R.id.signButton);
+                    Button tweetButton = (Button) findViewById(R.id.createTweet);
+                    Button feedButton  = (Button) findViewById(R.id.viewFeed);
                 
-                String helloText = (String) hello.getText(); 
-                hello.setText(helloText + tokenMap.get("USER_ID") + "!");
-                hello.setVisibility(View.VISIBLE);
-                signButton.setText("Sign Out");
-                tweetButton.setEnabled(true);
-                feedButton.setEnabled(true);
-                
+                    String helloText = (String) hello.getText(); 
+                    hello.setText(helloText + user_id + "!");
+                    hello.setVisibility(View.VISIBLE);
+                    signButton.setText("Sign Out");
+                    tweetButton.setEnabled(true);
+                    feedButton.setEnabled(true);
+            	} else if (resultCode == SignIn.SIGN_IN_FAILED) {
+            		String error ="There was an error with Authentication.\n" +
+            				 "Please clear your browser cookies and try again";
+            		Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+            	}
                 
             	break;
             case Tweet.TWEET_REQUEST_CODE:

@@ -3,14 +3,18 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity"
+    android:background="#B07D53" >
     
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="80sp"
+        android:layout_marginBottom="20sp"
         android:text="@string/app_name"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:gravity="center"
         android:textSize="40sp" />
     
@@ -18,9 +22,11 @@
         android:id="@+id/hello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20sp"
         android:gravity="center"
         android:text="@string/hello"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:textSize="20sp"
         android:visibility="gone" />
 
@@ -28,24 +34,33 @@
         android:id="@+id/signButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20sp"
         android:text="@string/signButton"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
+        android:background="@drawable/blue_button"
         android:minWidth="180sp"
         android:onClick="signAction" />
     <Button
         android:id="@+id/createTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20sp"
         android:text="@string/tweet"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
+        android:background="@drawable/blue_button"
         android:minWidth="180sp"
         android:onClick="tweetAction" />
     <Button
         android:id="@+id/viewFeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20sp"
         android:text="@string/viewFeed"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
+        android:background="@drawable/blue_button"
         android:minWidth="180sp"
         android:onClick="feedAction" />
 

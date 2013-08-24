@@ -2,15 +2,17 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#9AE4E8" >
     
     <TextView
         android:id="@+id/tweet"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="30dp"
-        android:gravity="center"        
+        android:layout_marginTop="80sp"
+        android:layout_marginBottom="30sp"
+        android:gravity="center" 
+        android:textColor="#ffffff"       
         android:text="@string/tweet"
         android:textSize="40sp" />
     
@@ -18,8 +20,9 @@
           android:id="@+id/tweetBody"
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"
-          android:layout_marginRight="20dp"
-          android:layout_marginLeft="20dp"
+          android:layout_marginRight="20sp"
+          android:layout_marginLeft="20sp"
+          android:layout_marginBottom="20sp"
 	      android:inputType="textMultiLine|textCapSentences"
 	      android:gravity="top|left"
 	      android:singleLine="false"
@@ -31,8 +34,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:textColor="#ffffff"
+        android:background="@drawable/brown_button"
         android:gravity="center"
         android:text="@string/post"
         android:onClick="post" />
